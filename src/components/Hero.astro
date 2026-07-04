@@ -25,8 +25,8 @@ const stats = [
 					src={`${base}${profile.avatar}`}
 					alt={`${profile.name} 的头像`}
 					class="avatar"
-					width="140"
-					height="196"
+					width="148"
+					height="148"
 				/>
 			</div>
 			<div class="hero-text">
@@ -94,19 +94,22 @@ const stats = [
 
 	.avatar-wrap {
 		padding: 4px;
-		border-radius: 16px;
+		border-radius: 50%;
 		background: linear-gradient(135deg, var(--color-avatar-border-start), var(--color-avatar-border-end));
 		box-shadow: var(--shadow-md);
+		flex-shrink: 0;
+		overflow: hidden;
 	}
 
 	.avatar {
-		width: 140px;
-		height: auto;
-		aspect-ratio: 277 / 389;
-		border-radius: 12px;
-		object-fit: contain;
+		width: 148px;
+		height: 148px;
+		border-radius: 50%;
+		object-fit: cover;
+		object-position: center -350%;
+		transform: scale(0.9);
 		background: #fff;
-		flex-shrink: 0;
+		display: block;
 	}
 
 	.eyebrow {
