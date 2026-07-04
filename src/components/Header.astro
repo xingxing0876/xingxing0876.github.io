@@ -1,41 +1,73 @@
 ---
+import ThemeToggle from './ThemeToggle.astro';
+
+interface Props {
+	variant?: 'home' | 'projects';
+}
+
+const { variant = 'projects' } = Astro.props;
 const base = import.meta.env.BASE_URL;
-const navItems = [
-	{ label: '首页', href: `${base}` },
-	{ label: '作品集', href: `${base}projects` },
+
+const anchorItems = [
+	{ label: '简介', href: '#about', section: 'about' },
+	{ label: '经历', href: '#experience', section: 'experience' },
+	{ label: '技能', href: '#skills', section: 'skills' },
+	{ label: '作品', href: '#projects', section: 'projects' },
+	{ label: '联系', href: '#contact', section: 'contact' },
 ];
+
+const pageItems = [
+	{ label: '首页', href: `${base}`, isPage: true },
+	{ label: '作品集', href: `${base}projects`, isPage: true },
+];
+
 const currentPath = Astro.url.pathname;
+const isHomePage = variant === 'home';
+const navItems = isHomePage
+	? [...anchorItems, { label: '全部作品', href: `${base}projects`, section: 'all-projects' }]
+	: pageItems;
 ---
 
-<header class="header">
+<header class="header" data-header>
 	<div class="container header-inner">
-		<nav class="nav" aria-label="主导航">
-		{
-			navItems.map((item) => {
-				const isHome = item.href === base;
-				const isActive = isHome
-					? currentPath === base || currentPath === base.replace(/\/$/, '')
-					: currentPath.startsWith(item.href);
-				return (
-					<a href={item.href} class:list={['nav-link', { active: isActive }]}>
-						{item.label}
-					</a>
-				);
-			})
-		}
+		<nav class="nav" aria-label="主导航" data-nav>
+			{
+				navItems.map((item) => {
+					const isPageLink = 'isPage' in item && item.isPage;
+					const isHome = item.href === base;
+					const isActive = isPageLink
+						? isHome
+							? currentPath === base || currentPath === base.replace(/\/$/, '')
+							: currentPath.startsWith(item.href)
+						: false;
+					return (
+						<a
+							href={item.href}
+							class:list={['nav-link', { active: isActive }]}
+							data-section={'section' in item ? item.section : undefined}
+						>
+							{item.label}
+						</a>
+					);
+				})
+			}
 		</nav>
-		<button class="menu-toggle" aria-label="打开菜单" aria-expanded="false">
-			<span></span>
-			<span></span>
-			<span></span>
-		</button>
+		<div class="header-actions">
+			<ThemeToggle />
+			<button class="menu-toggle" aria-label="打开菜单" aria-expanded="false" data-menu-toggle>
+				<span></span>
+				<span></span>
+				<span></span>
+			</button>
+		</div>
 	</div>
 </header>
 
 <script>
-	const toggle = document.querySelector('.menu-toggle');
-	const nav = document.querySelector('.nav');
-	const header = document.querySelector('.header');
+	const header = document.querySelector('[data-header]');
+	const nav = document.querySelector('[data-nav]');
+	const toggle = document.querySelector('[data-menu-toggle]');
+	const isHome = document.querySelector('[data-page="home"]');
 
 	toggle?.addEventListener('click', () => {
 		const expanded = toggle.getAttribute('aria-expanded') === 'true';
@@ -43,9 +75,47 @@ const currentPath = Astro.url.pathname;
 		nav?.classList.toggle('open');
 	});
 
+	nav?.querySelectorAll('a[href^="#"]').forEach((link) => {
+		link.addEventListener('click', () => {
+			nav?.classList.remove('open');
+			toggle?.setAttribute('aria-expanded', 'false');
+		});
+	});
+
 	window.addEventListener('scroll', () => {
 		header?.classList.toggle('is-scrolled', window.scrollY > 8);
 	});
+
+	if (isHome) {
+		const sectionLinks = Array.from(
+			document.querySelectorAll<HTMLAnchorElement>('[data-section]'),
+		).filter((link) => link.getAttribute('href')?.startsWith('#'));
+
+		const sections = sectionLinks
+			.map((link) => {
+				const id = link.getAttribute('href')?.slice(1);
+				const el = id ? document.getElementById(id) : null;
+				return el ? { id, el, link } : null;
+			})
+			.filter(Boolean) as Array<{ id: string; el: HTMLElement; link: HTMLAnchorElement }>;
+
+		const updateActiveSection = () => {
+			const offset = 120;
+			let current = sections[0];
+
+			for (const section of sections) {
+				if (section.el.offsetTop - offset <= window.scrollY) {
+					current = section;
+				}
+			}
+
+			sectionLinks.forEach((link) => link.classList.remove('active'));
+			current?.link.classList.add('active');
+		};
+
+		updateActiveSection();
+		window.addEventListener('scroll', updateActiveSection, { passive: true });
+	}
 </script>
 
 <style>
@@ -53,14 +123,14 @@ const currentPath = Astro.url.pathname;
 		position: sticky;
 		top: 0;
 		z-index: 100;
-		background: rgba(248, 250, 252, 0.85);
+		background: var(--color-header-bg);
 		backdrop-filter: blur(12px);
 		border-bottom: 1px solid transparent;
 		transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
 	}
 
 	.header.is-scrolled {
-		background: rgba(255, 255, 255, 0.92);
+		background: var(--color-header-scrolled);
 		border-bottom-color: var(--color-border);
 		box-shadow: var(--shadow-sm);
 	}
@@ -68,27 +138,36 @@ const currentPath = Astro.url.pathname;
 	.header-inner {
 		display: flex;
 		align-items: center;
-		justify-content: flex-end;
+		justify-content: space-between;
 		height: 4rem;
+		gap: 1rem;
 	}
 
 	.nav {
 		display: flex;
-		gap: 0.25rem;
+		flex-wrap: wrap;
+		gap: 0.15rem;
 	}
 
 	.nav-link {
-		padding: 0.5rem 0.9rem;
+		padding: 0.45rem 0.75rem;
 		border-radius: 999px;
 		color: var(--color-text-muted);
 		font-weight: 500;
-		font-size: 0.95rem;
+		font-size: 0.88rem;
+		transition: color 0.2s, background 0.2s;
 	}
 
 	.nav-link:hover,
 	.nav-link.active {
 		color: var(--color-accent);
 		background: var(--color-accent-soft);
+	}
+
+	.header-actions {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
 	}
 
 	.menu-toggle {
@@ -109,7 +188,7 @@ const currentPath = Astro.url.pathname;
 		border-radius: 2px;
 	}
 
-	@media (max-width: 767px) {
+	@media (max-width: 900px) {
 		.menu-toggle {
 			display: flex;
 		}
@@ -124,10 +203,16 @@ const currentPath = Astro.url.pathname;
 			padding: 1rem;
 			background: var(--color-surface);
 			border-bottom: 1px solid var(--color-border);
+			box-shadow: var(--shadow-md);
 		}
 
 		.nav.open {
 			display: flex;
+		}
+
+		.nav-link {
+			font-size: 0.95rem;
+			padding: 0.6rem 0.9rem;
 		}
 	}
 </style>

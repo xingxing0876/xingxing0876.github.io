@@ -25,11 +25,11 @@ const experienceItems = experience.map((item) => ({
 ---
 
 <BaseLayout title={`${profile.name} · ${profile.title}`} description={profile.summary}>
-	<Header />
-	<main>
+	<Header variant="home" />
+	<main data-page="home">
 		<Hero projectCount={allProjects.length} />
 
-		<section id="about" class="section">
+		<section id="about" class="section reveal">
 			<div class="container">
 				<p class="section-eyebrow">About</p>
 				<h2 class="section-title">个人简介</h2>
@@ -40,13 +40,13 @@ const experienceItems = experience.map((item) => ({
 			</div>
 		</section>
 
-		<section id="experience" class="section section-alt">
+		<section id="experience" class="section section-alt reveal">
 			<div class="container">
 				<ResumeSection title="工作经历" eyebrow="Experience" items={experienceItems} />
 			</div>
 		</section>
 
-		<section id="skills" class="section">
+		<section id="skills" class="section reveal">
 			<div class="container">
 				<p class="section-eyebrow">Skills</p>
 				<h2 class="section-title">技能</h2>
@@ -67,7 +67,7 @@ const experienceItems = experience.map((item) => ({
 			</div>
 		</section>
 
-		<section id="projects" class="section section-alt">
+		<section id="projects" class="section section-alt reveal">
 			<div class="container">
 				<p class="section-eyebrow">Projects</p>
 				<h2 class="section-title">精选作品</h2>
@@ -81,7 +81,7 @@ const experienceItems = experience.map((item) => ({
 			</div>
 		</section>
 
-		<section id="contact" class="section">
+		<section id="contact" class="section reveal">
 			<div class="container contact-section">
 				<div class="contact-card card">
 					<p class="section-eyebrow">Contact</p>
