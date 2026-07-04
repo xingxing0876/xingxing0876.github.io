@@ -3,6 +3,7 @@ export const profile = {
 	title: 'Java高级研发工程师',
 	location: '深圳',
 	email: 'xiehengxing@foxmail.com',
+	avatar: 'assets/avatar.jpg',
 	github: 'https://github.com/xingxing0876',
 	zhihu: 'https://www.zhihu.com/people/AJLoveChina',
 	blog: 'http://hejie.nigeerhuo.com',
