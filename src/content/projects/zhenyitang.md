@@ -1,7 +1,7 @@
 ---
 title: "珍医堂（在线医药商城）"
 description: "面向同城医药即时零售的 B2C 平台，支持处方药审核、支付、配送调度与售后评价的完整交易链路。"
-image: "assets/projects/blog.svg"
+image: "assets/projects/platform-ecommerce.svg"
 category: "Platform"
 tags: ["Java", "微信支付", "RabbitMQ", "Redis"]
 featured: false

@@ -22,43 +22,44 @@ const experienceItems = experience.map((item) => ({
 	period: item.period,
 	highlights: item.highlights,
 }));
-
 ---
 
 <BaseLayout title={`${profile.name} · ${profile.title}`} description={profile.summary}>
 	<Header />
 	<main>
-		<Hero />
+		<Hero projectCount={allProjects.length} />
 
-		<section class="section">
+		<section id="about" class="section">
 			<div class="container">
+				<p class="section-eyebrow">About</p>
 				<h2 class="section-title">个人简介</h2>
-				<div class="prose">
+				<div class="prose intro-card card">
 					<p>{profile.summary}</p>
 					<p>{profile.about}</p>
 				</div>
 			</div>
 		</section>
 
-		<section class="section section-alt">
+		<section id="experience" class="section section-alt">
 			<div class="container">
-				<ResumeSection title="工作经历" items={experienceItems} />
+				<ResumeSection title="工作经历" eyebrow="Experience" items={experienceItems} />
 			</div>
 		</section>
 
-		<section class="section">
+		<section id="skills" class="section">
 			<div class="container">
+				<p class="section-eyebrow">Skills</p>
 				<h2 class="section-title">技能</h2>
 				<div class="skills-grid">
-					<div>
+					<div class="skill-card card">
 						<h3 class="skill-group">核心技术</h3>
 						<SkillTags skills={skills.core} />
 					</div>
-					<div>
+					<div class="skill-card card">
 						<h3 class="skill-group">中间件</h3>
 						<SkillTags skills={skills.middleware} />
 					</div>
-					<div>
+					<div class="skill-card card">
 						<h3 class="skill-group">架构与工程</h3>
 						<SkillTags skills={skills.architecture} />
 					</div>
@@ -66,8 +67,9 @@ const experienceItems = experience.map((item) => ({
 			</div>
 		</section>
 
-		<section class="section">
+		<section id="projects" class="section section-alt">
 			<div class="container">
+				<p class="section-eyebrow">Projects</p>
 				<h2 class="section-title">精选作品</h2>
 				<p class="section-subtitle">近期完成的部分项目</p>
 				<div class="grid-3">
@@ -79,11 +81,15 @@ const experienceItems = experience.map((item) => ({
 			</div>
 		</section>
 
-		<section class="section section-alt">
+		<section id="contact" class="section">
 			<div class="container contact-section">
-				<h2 class="section-title">联系我</h2>
-				<p class="section-subtitle">期待与你的交流与合作</p>
-				<ContactLinks />
+				<div class="contact-card card">
+					<p class="section-eyebrow">Contact</p>
+					<h2 class="section-title">联系我</h2>
+					<p class="section-subtitle">期待与你的交流与合作</p>
+					<ContactLinks />
+					<a href={`mailto:${profile.email}`} class="btn btn-primary contact-btn">发送邮件</a>
+				</div>
 			</div>
 		</section>
 	</main>
@@ -96,29 +102,68 @@ const experienceItems = experience.map((item) => ({
 		border-block: 1px solid var(--color-border);
 	}
 
-	.section-action {
-		margin-top: 2rem;
-		text-align: center;
-	}
-
-	.contact-section {
-		text-align: center;
-	}
-
-	.contact-section :global(.contact-links) {
-		justify-content: center;
+	.intro-card {
+		padding: 2rem;
 	}
 
 	.skills-grid {
 		display: grid;
-		gap: 1.5rem;
+		gap: 1.25rem;
+	}
+
+	.skill-card {
+		padding: 1.5rem;
+		transition: transform 0.2s, box-shadow 0.2s;
+	}
+
+	.skill-card:hover {
+		transform: translateY(-2px);
+		box-shadow: var(--shadow-md);
 	}
 
 	.skill-group {
-		margin: 0 0 0.75rem;
+		margin: 0 0 1rem;
 		font-size: 0.95rem;
-		color: var(--color-text-muted);
-		font-weight: 600;
+		color: var(--color-text);
+		font-weight: 700;
+	}
+
+	.section-action {
+		margin-top: 2.5rem;
+		text-align: center;
+	}
+
+	.contact-section {
+		display: flex;
+		justify-content: center;
+	}
+
+	.contact-card {
+		width: min(100%, 560px);
+		padding: 2.5rem 2rem;
+		text-align: center;
+		box-shadow: var(--shadow-md);
+	}
+
+	.contact-card .section-eyebrow {
+		margin-bottom: 0.5rem;
+	}
+
+	.contact-card .section-title {
+		margin-bottom: 0.5rem;
+	}
+
+	.contact-card .section-subtitle {
+		margin-bottom: 1.5rem;
+	}
+
+	.contact-card :global(.contact-links) {
+		justify-content: center;
+		margin-bottom: 1.5rem;
+	}
+
+	.contact-btn {
+		margin-top: 0.5rem;
 	}
 
 	@media (min-width: 768px) {

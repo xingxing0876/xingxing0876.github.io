@@ -1,7 +1,7 @@
 ---
 title: "投资管理系统（港美股交易平台）"
 description: "港美股投资管理平台，涵盖实时行情、策略交易、账目分析与机器手调度，接入 8 家券商及银行交易接口。"
-image: "assets/projects/blog.svg"
+image: "assets/projects/fintech-trading.svg"
 category: "FinTech"
 tags: ["Java", "Netty", "Disruptor", "量化交易"]
 featured: true

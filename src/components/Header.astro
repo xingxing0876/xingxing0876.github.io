@@ -35,11 +35,16 @@ const currentPath = Astro.url.pathname;
 <script>
 	const toggle = document.querySelector('.menu-toggle');
 	const nav = document.querySelector('.nav');
+	const header = document.querySelector('.header');
 
 	toggle?.addEventListener('click', () => {
 		const expanded = toggle.getAttribute('aria-expanded') === 'true';
 		toggle.setAttribute('aria-expanded', String(!expanded));
 		nav?.classList.toggle('open');
+	});
+
+	window.addEventListener('scroll', () => {
+		header?.classList.toggle('is-scrolled', window.scrollY > 8);
 	});
 </script>
 
@@ -48,9 +53,16 @@ const currentPath = Astro.url.pathname;
 		position: sticky;
 		top: 0;
 		z-index: 100;
-		background: rgba(248, 250, 252, 0.9);
-		backdrop-filter: blur(8px);
-		border-bottom: 1px solid var(--color-border);
+		background: rgba(248, 250, 252, 0.85);
+		backdrop-filter: blur(12px);
+		border-bottom: 1px solid transparent;
+		transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+	}
+
+	.header.is-scrolled {
+		background: rgba(255, 255, 255, 0.92);
+		border-bottom-color: var(--color-border);
+		box-shadow: var(--shadow-sm);
 	}
 
 	.header-inner {

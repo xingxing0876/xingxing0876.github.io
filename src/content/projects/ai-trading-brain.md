@@ -1,7 +1,7 @@
 ---
 title: "AI 交易大脑（智能量化 Agent）"
 description: "AI 驱动的量化交易 Agent 系统，基于 LangGraph 实现观察→思考→行动循环，完成行情感知到自动交易决策的闭环。"
-image: "assets/projects/toolbox.svg"
+image: "assets/projects/ai-agent.svg"
 category: "FinTech"
 tags: ["LangGraph", "AI Agent", "量化因子", "Python"]
 featured: true
