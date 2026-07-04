@@ -8,7 +8,7 @@ import ProjectCard from '../components/ProjectCard.astro';
 import ContactLinks from '../components/ContactLinks.astro';
 import ResumeSection from '../components/ResumeSection.astro';
 import { getCollection } from 'astro:content';
-import { profile, experience, education, skills } from '../data/resume';
+import { profile, experience, skills } from '../data/resume';
 
 const base = import.meta.env.BASE_URL;
 const allProjects = await getCollection('projects');
@@ -23,11 +23,6 @@ const experienceItems = experience.map((item) => ({
 	highlights: item.highlights,
 }));
 
-const educationItems = education.map((item) => ({
-	primary: item.school,
-	secondary: item.degree,
-	period: item.period,
-}));
 ---
 
 <BaseLayout title={`${profile.name} · ${profile.title}`} description={profile.summary}>
@@ -52,12 +47,6 @@ const educationItems = education.map((item) => ({
 		</section>
 
 		<section class="section">
-			<div class="container">
-				<ResumeSection title="教育背景" items={educationItems} />
-			</div>
-		</section>
-
-		<section class="section section-alt">
 			<div class="container">
 				<h2 class="section-title">技能</h2>
 				<div class="skills-grid">

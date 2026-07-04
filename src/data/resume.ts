@@ -58,14 +58,6 @@ export const experience = [
 	},
 ];
 
-export const education = [
-	{
-		school: '黄河水利职业技术学院',
-		degree: '专科',
-		period: '2012.09 — 2015.06',
-	},
-];
-
 export const skills = {
 	core: ['Java', '多线程并发', 'JVM调优', 'Netty', 'Disruptor'],
 	middleware: ['MySQL', 'Redis', 'Kafka', 'RocketMQ', 'Elasticsearch', 'Nacos'],
