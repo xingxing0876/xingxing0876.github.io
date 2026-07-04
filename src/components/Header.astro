@@ -1,0 +1,134 @@
+---
+const base = import.meta.env.BASE_URL;
+const navItems = [
+	{ label: '首页', href: `${base}` },
+	{ label: '简历', href: `${base}resume` },
+	{ label: '作品集', href: `${base}projects` },
+];
+const currentPath = Astro.url.pathname;
+---
+
+<header class="header">
+	<div class="container header-inner">
+		<a href={base} class="logo">MyselfBlog</a>
+		<nav class="nav" aria-label="主导航">
+		{
+			navItems.map((item) => {
+				const isHome = item.href === base;
+				const isActive = isHome
+					? currentPath === base || currentPath === base.replace(/\/$/, '')
+					: currentPath.startsWith(item.href);
+				return (
+					<a href={item.href} class:list={['nav-link', { active: isActive }]}>
+						{item.label}
+					</a>
+				);
+			})
+		}
+		</nav>
+		<button class="menu-toggle" aria-label="打开菜单" aria-expanded="false">
+			<span></span>
+			<span></span>
+			<span></span>
+		</button>
+	</div>
+</header>
+
+<script>
+	const toggle = document.querySelector('.menu-toggle');
+	const nav = document.querySelector('.nav');
+
+	toggle?.addEventListener('click', () => {
+		const expanded = toggle.getAttribute('aria-expanded') === 'true';
+		toggle.setAttribute('aria-expanded', String(!expanded));
+		nav?.classList.toggle('open');
+	});
+</script>
+
+<style>
+	.header {
+		position: sticky;
+		top: 0;
+		z-index: 100;
+		background: rgba(248, 250, 252, 0.9);
+		backdrop-filter: blur(8px);
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.header-inner {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		height: 4rem;
+	}
+
+	.logo {
+		font-weight: 700;
+		font-size: 1.1rem;
+		color: var(--color-text);
+		letter-spacing: -0.02em;
+	}
+
+	.logo:hover {
+		color: var(--color-accent);
+	}
+
+	.nav {
+		display: flex;
+		gap: 0.25rem;
+	}
+
+	.nav-link {
+		padding: 0.5rem 0.9rem;
+		border-radius: 999px;
+		color: var(--color-text-muted);
+		font-weight: 500;
+		font-size: 0.95rem;
+	}
+
+	.nav-link:hover,
+	.nav-link.active {
+		color: var(--color-accent);
+		background: var(--color-accent-soft);
+	}
+
+	.menu-toggle {
+		display: none;
+		flex-direction: column;
+		gap: 5px;
+		padding: 0.5rem;
+		border: none;
+		background: transparent;
+		cursor: pointer;
+	}
+
+	.menu-toggle span {
+		display: block;
+		width: 22px;
+		height: 2px;
+		background: var(--color-text);
+		border-radius: 2px;
+	}
+
+	@media (max-width: 767px) {
+		.menu-toggle {
+			display: flex;
+		}
+
+		.nav {
+			display: none;
+			position: absolute;
+			top: 4rem;
+			left: 0;
+			right: 0;
+			flex-direction: column;
+			padding: 1rem;
+			background: var(--color-surface);
+			border-bottom: 1px solid var(--color-border);
+		}
+
+		.nav.open {
+			display: flex;
+		}
+	}
+</style>

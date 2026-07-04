@@ -1,0 +1,125 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ResumeSection from '../components/ResumeSection.astro';
+import SkillTags from '../components/SkillTags.astro';
+import { profile, experience, education, skills } from '../data/resume';
+
+const experienceItems = experience.map((item) => ({
+	primary: item.company,
+	secondary: item.role,
+	period: item.period,
+	highlights: item.highlights,
+}));
+
+const educationItems = education.map((item) => ({
+	primary: item.school,
+	secondary: item.degree,
+	period: item.period,
+}));
+---
+
+<BaseLayout title={`${profile.name} · 简历`} description={`${profile.name} 的在线简历`}>
+	<Header />
+	<main class="resume-page">
+		<section class="section">
+			<div class="container">
+				<div class="resume-header card">
+					<div>
+						<h1 class="resume-name">{profile.name}</h1>
+						<p class="resume-title">{profile.title}</p>
+						<p class="resume-meta">{profile.location} · {profile.email}</p>
+					</div>
+				</div>
+
+				<div class="resume-body">
+					<section class="resume-block">
+						<h2 class="section-title">个人简介</h2>
+						<p class="summary">{profile.summary}</p>
+					</section>
+
+					<ResumeSection title="工作经历" items={experienceItems} />
+					<ResumeSection title="教育背景" items={educationItems} />
+
+					<section class="resume-block">
+						<h2 class="section-title">技能</h2>
+						<div class="skills-grid">
+							<div>
+								<h3 class="skill-group">语言</h3>
+								<SkillTags skills={skills.languages} />
+							</div>
+							<div>
+								<h3 class="skill-group">框架</h3>
+								<SkillTags skills={skills.frameworks} />
+							</div>
+							<div>
+								<h3 class="skill-group">工具</h3>
+								<SkillTags skills={skills.tools} />
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+		</section>
+	</main>
+	<Footer />
+</BaseLayout>
+
+<style>
+	.resume-page {
+		padding-bottom: 2rem;
+	}
+
+	.resume-header {
+		padding: 2rem;
+		margin-bottom: 2rem;
+	}
+
+	.resume-name {
+		margin: 0;
+		font-size: 2rem;
+		font-weight: 700;
+		letter-spacing: -0.03em;
+	}
+
+	.resume-title {
+		margin: 0.5rem 0 0;
+		color: var(--color-accent);
+		font-weight: 600;
+		font-size: 1.1rem;
+	}
+
+	.resume-meta {
+		margin: 0.5rem 0 0;
+		color: var(--color-text-muted);
+	}
+
+	.summary {
+		margin: 0;
+		color: var(--color-text-muted);
+		line-height: 1.7;
+	}
+
+	.resume-block {
+		margin-bottom: 2.5rem;
+	}
+
+	.skills-grid {
+		display: grid;
+		gap: 1.5rem;
+	}
+
+	.skill-group {
+		margin: 0 0 0.75rem;
+		font-size: 0.95rem;
+		color: var(--color-text-muted);
+		font-weight: 600;
+	}
+
+	@media (min-width: 768px) {
+		.skills-grid {
+			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+</style>

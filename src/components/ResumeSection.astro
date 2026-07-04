@@ -1,0 +1,97 @@
+---
+interface Props {
+	title: string;
+	items: Array<{
+		primary: string;
+		secondary?: string;
+		period?: string;
+		highlights?: string[];
+	}>;
+}
+
+const { title, items } = Astro.props;
+---
+
+<section class="resume-section">
+	<h2 class="section-title">{title}</h2>
+	<div class="timeline">
+		{
+			items.map((item) => (
+				<div class="timeline-item">
+					<div class="timeline-header">
+						<div>
+							<h3 class="item-primary">{item.primary}</h3>
+							{item.secondary && <p class="item-secondary">{item.secondary}</p>}
+						</div>
+						{item.period && <span class="item-period">{item.period}</span>}
+					</div>
+					{item.highlights && (
+						<ul class="highlights">
+							{item.highlights.map((point) => (
+								<li>{point}</li>
+							))}
+						</ul>
+					)}
+				</div>
+			))
+		}
+	</div>
+</section>
+
+<style>
+	.resume-section {
+		margin-bottom: 2.5rem;
+	}
+
+	.timeline {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+
+	.timeline-item {
+		padding: 1.25rem;
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius);
+	}
+
+	.timeline-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		gap: 1rem;
+	}
+
+	.item-primary {
+		margin: 0;
+		font-size: 1.05rem;
+		font-weight: 700;
+	}
+
+	.item-secondary {
+		margin: 0.25rem 0 0;
+		color: var(--color-accent);
+		font-weight: 500;
+	}
+
+	.item-period {
+		color: var(--color-text-muted);
+		font-size: 0.9rem;
+		white-space: nowrap;
+	}
+
+	.highlights {
+		margin: 1rem 0 0;
+		padding-left: 1.25rem;
+		color: var(--color-text-muted);
+	}
+
+	.highlights li {
+		margin-bottom: 0.35rem;
+	}
+
+	.highlights li:last-child {
+		margin-bottom: 0;
+	}
+</style>

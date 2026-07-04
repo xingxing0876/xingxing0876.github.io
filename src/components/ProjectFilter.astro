@@ -1,0 +1,70 @@
+---
+const categories = ['全部', 'Web', 'Tool', 'Other'];
+---
+
+<div class="filter-bar" role="tablist" aria-label="项目分类筛选">
+	{
+		categories.map((category, index) => (
+			<button
+				type="button"
+				class:list={['filter-btn', { active: index === 0 }]}
+				data-category={category === '全部' ? 'all' : category}
+				role="tab"
+				aria-selected={index === 0 ? 'true' : 'false'}
+			>
+				{category}
+			</button>
+		))
+	}
+</div>
+
+<script>
+	const buttons = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+	const items = document.querySelectorAll<HTMLElement>('[data-project-category]');
+
+	buttons.forEach((button) => {
+		button.addEventListener('click', () => {
+			const category = button.dataset.category;
+
+			buttons.forEach((btn) => {
+				const isActive = btn === button;
+				btn.classList.toggle('active', isActive);
+				btn.setAttribute('aria-selected', String(isActive));
+			});
+
+			items.forEach((item) => {
+				const itemCategory = item.dataset.projectCategory;
+				const show = category === 'all' || itemCategory === category;
+				item.style.display = show ? '' : 'none';
+			});
+		});
+	});
+</script>
+
+<style>
+	.filter-bar {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin-bottom: 2rem;
+	}
+
+	.filter-btn {
+		padding: 0.5rem 1rem;
+		border: 1px solid var(--color-border);
+		border-radius: 999px;
+		background: var(--color-surface);
+		color: var(--color-text-muted);
+		font-weight: 500;
+		font-size: 0.9rem;
+		cursor: pointer;
+		transition: all 0.2s;
+	}
+
+	.filter-btn:hover,
+	.filter-btn.active {
+		border-color: var(--color-accent);
+		background: var(--color-accent-soft);
+		color: var(--color-accent);
+	}
+</style>

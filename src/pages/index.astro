@@ -1,0 +1,92 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Hero from '../components/Hero.astro';
+import SkillTags from '../components/SkillTags.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import ContactLinks from '../components/ContactLinks.astro';
+import { getCollection } from 'astro:content';
+import { profile, skills } from '../data/resume';
+
+const base = import.meta.env.BASE_URL;
+const allProjects = await getCollection('projects');
+const featuredProjects = allProjects
+	.filter((project) => project.data.featured)
+	.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const allSkills = [
+	...skills.languages,
+	...skills.frameworks,
+	...skills.tools,
+];
+---
+
+<BaseLayout title={`${profile.name} · 个人主页`} description={profile.summary}>
+	<Header />
+	<main>
+		<Hero />
+
+		<section class="section">
+			<div class="container">
+				<h2 class="section-title">关于我</h2>
+				<div class="prose">
+					<p>{profile.summary}</p>
+					<p>
+						我目前专注于 Web 前端开发，关注用户体验、性能优化与工程化实践。
+						欢迎通过下方链接与我交流。
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<section class="section section-alt">
+			<div class="container">
+				<h2 class="section-title">技能</h2>
+				<SkillTags skills={allSkills} />
+			</div>
+		</section>
+
+		<section class="section">
+			<div class="container">
+				<h2 class="section-title">精选作品</h2>
+				<p class="section-subtitle">近期完成的部分项目</p>
+				<div class="grid-3">
+					{featuredProjects.map((project) => <ProjectCard project={project} />)}
+				</div>
+				<div class="section-action">
+					<a href={`${base}projects`} class="btn btn-outline">查看全部作品 →</a>
+				</div>
+			</div>
+		</section>
+
+		<section class="section section-alt">
+			<div class="container contact-section">
+				<h2 class="section-title">联系我</h2>
+				<p class="section-subtitle">期待与你的交流与合作</p>
+				<ContactLinks />
+			</div>
+		</section>
+	</main>
+	<Footer />
+</BaseLayout>
+
+<style>
+	.section-alt {
+		background: var(--color-surface);
+		border-block: 1px solid var(--color-border);
+	}
+
+	.section-action {
+		margin-top: 2rem;
+		text-align: center;
+	}
+
+	.contact-section {
+		text-align: center;
+	}
+
+	.contact-section :global(.contact-links) {
+		justify-content: center;
+	}
+</style>
