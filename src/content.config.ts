@@ -8,7 +8,7 @@ const projects = defineCollection({
 		title: z.string(),
 		description: z.string(),
 		image: z.string().optional(),
-		category: z.enum(['Web', 'Tool', 'Other']),
+		category: z.enum(['FinTech', 'Platform', 'Other']),
 		tags: z.array(z.string()),
 		featured: z.boolean().default(false),
 		links: z

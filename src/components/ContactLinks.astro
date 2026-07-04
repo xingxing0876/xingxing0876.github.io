@@ -4,14 +4,18 @@ import { profile } from '../data/resume';
 
 <div class="contact-links">
 	<a href={`mailto:${profile.email}`} aria-label="发送邮件">邮箱</a>
+	<a href={`tel:${profile.phone}`} aria-label="拨打电话">电话</a>
 	<a href={profile.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub">GitHub</a>
-	<a href={profile.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">LinkedIn</a>
+	<a href={profile.zhihu} target="_blank" rel="noopener noreferrer" aria-label="知乎">知乎</a>
+	<a href={profile.blog} target="_blank" rel="noopener noreferrer" aria-label="博客">博客</a>
 </div>
 
 <style>
 	.contact-links {
 		display: flex;
+		flex-wrap: wrap;
 		gap: 1rem;
+		justify-content: center;
 	}
 
 	.contact-links a {

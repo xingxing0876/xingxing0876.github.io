@@ -16,9 +16,9 @@ const featuredProjects = allProjects
 	.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
 const allSkills = [
-	...skills.languages,
-	...skills.frameworks,
-	...skills.tools,
+	...skills.core,
+	...skills.middleware,
+	...skills.architecture,
 ];
 ---
 
@@ -32,10 +32,7 @@ const allSkills = [
 				<h2 class="section-title">关于我</h2>
 				<div class="prose">
 					<p>{profile.summary}</p>
-					<p>
-						我目前专注于 Web 前端开发，关注用户体验、性能优化与工程化实践。
-						欢迎通过下方链接与我交流。
-					</p>
+					<p>{profile.about}</p>
 				</div>
 			</div>
 		</section>

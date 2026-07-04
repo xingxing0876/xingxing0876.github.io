@@ -1,4 +1,6 @@
 ---
+import { profile } from '../data/resume';
+
 const base = import.meta.env.BASE_URL;
 const navItems = [
 	{ label: '首页', href: `${base}` },
@@ -10,7 +12,7 @@ const currentPath = Astro.url.pathname;
 
 <header class="header">
 	<div class="container header-inner">
-		<a href={base} class="logo">MyselfBlog</a>
+		<a href={base} class="logo">{profile.name}</a>
 		<nav class="nav" aria-label="主导航">
 		{
 			navItems.map((item) => {

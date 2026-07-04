@@ -29,7 +29,9 @@ const educationItems = education.map((item) => ({
 					<div>
 						<h1 class="resume-name">{profile.name}</h1>
 						<p class="resume-title">{profile.title}</p>
-						<p class="resume-meta">{profile.location} · {profile.email}</p>
+						<p class="resume-meta">
+							{profile.location} · {profile.experienceYears} 年经验 · {profile.email} · {profile.phone}
+						</p>
 					</div>
 				</div>
 
@@ -46,16 +48,16 @@ const educationItems = education.map((item) => ({
 						<h2 class="section-title">技能</h2>
 						<div class="skills-grid">
 							<div>
-								<h3 class="skill-group">语言</h3>
-								<SkillTags skills={skills.languages} />
+								<h3 class="skill-group">核心技术</h3>
+								<SkillTags skills={skills.core} />
 							</div>
 							<div>
-								<h3 class="skill-group">框架</h3>
-								<SkillTags skills={skills.frameworks} />
+								<h3 class="skill-group">中间件</h3>
+								<SkillTags skills={skills.middleware} />
 							</div>
 							<div>
-								<h3 class="skill-group">工具</h3>
-								<SkillTags skills={skills.tools} />
+								<h3 class="skill-group">架构与工程</h3>
+								<SkillTags skills={skills.architecture} />
 							</div>
 						</div>
 					</section>
