@@ -1,7 +1,7 @@
 ---
 title: "镜享（3D 眼镜共享租赁平台）"
 description: "面向全国影院的 3D 眼镜智能租赁平台，对接支付宝芝麻信用免押金，支持分时计费与设备追踪。"
-image: "assets/projects/platform-rental.svg"
+image: "assets/projects/jingxiang.jpg"
 category: "Platform"
 tags: ["微服务", "支付宝", "RocketMQ", "Redis"]
 featured: false

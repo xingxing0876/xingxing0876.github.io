@@ -1,7 +1,7 @@
 ---
 title: "小豆苗（千万级母婴平台）"
 description: "iOS 母婴类 TOP 3 应用，千万级注册用户，覆盖预防接种全流程与育儿服务，服务全国 3 万+ 接种门诊。"
-image: "assets/projects/platform-health.svg"
+image: "assets/projects/xiaodoumiao.jpg"
 category: "Platform"
 tags: ["微服务", "RabbitMQ", "高并发", "分布式事务"]
 featured: true
